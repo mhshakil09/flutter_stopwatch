@@ -15,7 +15,9 @@ class HomeScreen extends StatelessWidget {
       //   centerTitle: true,
       // ),
       backgroundColor: Color(0xff1c2757),
-      body: Body(),
+      body: SafeArea(
+        child: Body(),
+      ),
     );
   }
 }

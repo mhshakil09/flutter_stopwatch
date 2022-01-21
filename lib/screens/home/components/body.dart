@@ -11,8 +11,8 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  int microseconds = 0, seconds = 0, minutes = 0, hours = 0;
-  String digitMicroseconds = "000", digitSeconds = "00", digitMinutes = "00", digitHours = "00";
+  int milliseconds = 0, seconds = 0, minutes = 0, hours = 0;
+  String digitMilliseconds = "000", digitSeconds = "00", digitMinutes = "00", digitHours = "00";
   Timer? timer;
   bool started = false;
   List laps = [];
@@ -24,13 +24,16 @@ class _BodyState extends State<Body> {
       started = true;
     });
     print(started);
-    timer = Timer.periodic(Duration(microseconds: 1), (timer) {
-      int localMicroseconds = microseconds + 1;
+    timer = Timer.periodic(Duration(milliseconds: 1), (timer) {
+      int localMilliseconds = milliseconds + 1;
       int localSeconds = seconds;
       int localMinutes = minutes;
       int localHours = hours;
 
-      if (localMicroseconds > 1000) {
+      // perfectly works in release version
+      // but don't know why not working perfectly in build version and other version
+
+      if (localMilliseconds > 1000) {
         if (localSeconds > 59) {
           if (localMinutes > 59) {
             localHours++;
@@ -41,27 +44,30 @@ class _BodyState extends State<Body> {
           }
         } else {
           localSeconds++;
-          localMicroseconds = 0;
+          localMilliseconds = 0;
         }
       }
-      print("$localHours:$localMinutes:$localSeconds:$localMicroseconds");
+      // print("$localHours:$localMinutes:$localSeconds:$localMicroseconds");
       setState(() {
-        microseconds = localMicroseconds;
+        milliseconds = localMilliseconds.toInt();
         seconds = localSeconds;
         minutes = localMinutes;
         hours = localHours;
 
-        digitMicroseconds = (microseconds == 1000)
-            ? "${microseconds / 10.0}"
-            : (microseconds >= 100)
-                ? "$microseconds"
-                : (microseconds >= 10)
-                    ? "0$microseconds"
-                    : "00$microseconds";
-        digitMicroseconds = digitMicroseconds.length > 3 ? (microseconds/10).toString() : digitMicroseconds;
+        digitMilliseconds = (milliseconds == 1000)
+            ? milliseconds.toString().substring(0,3)
+            : (milliseconds >= 100)
+                ? "$milliseconds"
+                : (milliseconds >= 10)
+                    ? "0$milliseconds"
+                    : "00$milliseconds";
+        // digitMicroseconds = digitMicroseconds.length > 3 ? (microseconds~/10).toString() : digitMicroseconds;
+        digitMilliseconds = digitMilliseconds;
         digitSeconds = (seconds >= 10) ? "$seconds" : "0$seconds";
         digitMinutes = (minutes >= 10) ? "$minutes" : "0$minutes";
         digitHours = (hours >= 10) ? "$hours" : "0$hours";
+
+        print("$digitHours:$digitMinutes:$digitSeconds:$digitMilliseconds");
       });
     });
   }
@@ -90,12 +96,12 @@ class _BodyState extends State<Body> {
 
     timer!.cancel();
     setState(() {
-      microseconds = 0;
+      milliseconds = 0;
       seconds = 0;
       minutes = 0;
       hours = 0;
 
-      digitMicroseconds = "000";
+      digitMilliseconds = "000";
       digitSeconds = "00";
       digitMinutes = "00";
       digitHours = "00";
@@ -107,7 +113,7 @@ class _BodyState extends State<Body> {
   //add laps
   void addLaps() {
     print("Lap pressed");
-    String lap = "$digitHours:$digitMinutes:$digitSeconds:$digitMicroseconds";
+    String lap = "$digitHours:$digitMinutes:$digitSeconds:$digitMilliseconds";
     setState(() {
       laps.insert(0, lap);
     });
@@ -179,7 +185,7 @@ class _BodyState extends State<Body> {
               ),
               Center(
                 child: Text(
-                  "$digitHours:$digitMinutes:$digitSeconds:$digitMicroseconds",
+                  "$digitHours:$digitMinutes:$digitSeconds:$digitMilliseconds",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 48.0,

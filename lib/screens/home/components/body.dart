@@ -18,22 +18,74 @@ class _BodyState extends State<Body> {
   List laps = [];
 
   //starting timer function
+  // void start() {
+  //   print(started);
+  //   setState(() {
+  //     started = true;
+  //   });
+  //   print(started);
+  //   timer = Timer.periodic(Duration(milliseconds: 1), (timer) {
+  //     int localMilliseconds = milliseconds + 1;
+  //     int localSeconds = seconds;
+  //     int localMinutes = minutes;
+  //     int localHours = hours;
+  //
+  //     // perfectly works in release version
+  //     // but don't know why not working perfectly in build version and other version
+  //
+  //     if (localMilliseconds > 1000) {
+  //       if (localSeconds > 59) {
+  //         if (localMinutes > 59) {
+  //           localHours++;
+  //           localMinutes = 0;
+  //         } else {
+  //           localMinutes++;
+  //           localSeconds = 0;
+  //         }
+  //       } else {
+  //         localSeconds++;
+  //         localMilliseconds = 0;
+  //       }
+  //     }
+  //     // print("$localHours:$localMinutes:$localSeconds:$localMicroseconds");
+  //     setState(() {
+  //       milliseconds = localMilliseconds.toInt();
+  //       seconds = localSeconds;
+  //       minutes = localMinutes;
+  //       hours = localHours;
+  //
+  //       digitMilliseconds = (milliseconds == 1000)
+  //           ? milliseconds.toString().substring(0,3)
+  //           : (milliseconds >= 100)
+  //               ? "$milliseconds"
+  //               : (milliseconds >= 10)
+  //                   ? "0$milliseconds"
+  //                   : "00$milliseconds";
+  //       // digitMicroseconds = digitMicroseconds.length > 3 ? (microseconds~/10).toString() : digitMicroseconds;
+  //       digitMilliseconds = digitMilliseconds;
+  //       digitSeconds = (seconds >= 10) ? "$seconds" : "0$seconds";
+  //       digitMinutes = (minutes >= 10) ? "$minutes" : "0$minutes";
+  //       digitHours = (hours >= 10) ? "$hours" : "0$hours";
+  //
+  //       print("$digitHours:$digitMinutes:$digitSeconds:$digitMilliseconds");
+  //     });
+  //   });
+  // }
+
   void start() {
     print(started);
     setState(() {
       started = true;
     });
     print(started);
-    timer = Timer.periodic(Duration(milliseconds: 1), (timer) {
-      int localMilliseconds = milliseconds + 1;
-      int localSeconds = seconds;
+    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      int localSeconds = seconds + 1;
       int localMinutes = minutes;
       int localHours = hours;
 
       // perfectly works in release version
       // but don't know why not working perfectly in build version and other version
 
-      if (localMilliseconds > 1000) {
         if (localSeconds > 59) {
           if (localMinutes > 59) {
             localHours++;
@@ -42,27 +94,13 @@ class _BodyState extends State<Body> {
             localMinutes++;
             localSeconds = 0;
           }
-        } else {
-          localSeconds++;
-          localMilliseconds = 0;
         }
-      }
       // print("$localHours:$localMinutes:$localSeconds:$localMicroseconds");
       setState(() {
-        milliseconds = localMilliseconds.toInt();
         seconds = localSeconds;
         minutes = localMinutes;
         hours = localHours;
 
-        digitMilliseconds = (milliseconds == 1000)
-            ? milliseconds.toString().substring(0,3)
-            : (milliseconds >= 100)
-                ? "$milliseconds"
-                : (milliseconds >= 10)
-                    ? "0$milliseconds"
-                    : "00$milliseconds";
-        // digitMicroseconds = digitMicroseconds.length > 3 ? (microseconds~/10).toString() : digitMicroseconds;
-        digitMilliseconds = digitMilliseconds;
         digitSeconds = (seconds >= 10) ? "$seconds" : "0$seconds";
         digitMinutes = (minutes >= 10) ? "$minutes" : "0$minutes";
         digitHours = (hours >= 10) ? "$hours" : "0$hours";

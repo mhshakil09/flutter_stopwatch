@@ -105,7 +105,8 @@ class _BodyState extends State<Body> {
         digitMinutes = (minutes >= 10) ? "$minutes" : "0$minutes";
         digitHours = (hours >= 10) ? "$hours" : "0$hours";
 
-        print("$digitHours:$digitMinutes:$digitSeconds:$digitMilliseconds");
+        print("$digitHours:$digitMinutes:$digitSeconds");
+        // print("$digitHours:$digitMinutes:$digitSeconds:$digitMilliseconds");
       });
     });
   }
@@ -151,7 +152,8 @@ class _BodyState extends State<Body> {
   //add laps
   void addLaps() {
     print("Lap pressed");
-    String lap = "$digitHours:$digitMinutes:$digitSeconds:$digitMilliseconds";
+    String lap = "$digitHours:$digitMinutes:$digitSeconds";
+    // String lap = "$digitHours:$digitMinutes:$digitSeconds:$digitMilliseconds";
     setState(() {
       laps.insert(0, lap);
     });
@@ -223,7 +225,8 @@ class _BodyState extends State<Body> {
               ),
               Center(
                 child: Text(
-                  "$digitHours:$digitMinutes:$digitSeconds:$digitMilliseconds",
+                  "$digitHours:$digitMinutes:$digitSeconds",
+                  // "$digitHours:$digitMinutes:$digitSeconds:$digitMilliseconds",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 48.0,
